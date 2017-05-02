@@ -11,7 +11,8 @@ def demoAppURL(appname) {
     if ( appname ==~ /^bedrock-demo-[1-5]$/ ) {
         return "https://www-demo${appname[-1]}.allizom.org"
     }
-    return "https://${appname}.us-west.moz.works"
+    // TODO: parameterize cluster name
+    return "https://${appname}.virginia.moz.works"
 }
 
 /**
