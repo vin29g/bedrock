@@ -22,15 +22,17 @@ else
 fi
 
 echo "Creating the demo app $DEIS_APP_NAME"
-if $DEIS_BIN apps:create "$DEIS_APP_NAME" --no-remote; then
-  echo "Configuring the new demo app"
-  $DEIS_BIN config:push -a "$DEIS_APP_NAME" -p docker/envfiles/demo.env || true
-  # Sentry DSN is potentially sensitive. Turn off command echo.
-  set +x
-  if [[ -n "$SENTRY_DEMO_DSN" ]]; then
-    $DEIS_BIN config:set -a "$DEIS_APP_NAME" "SENTRY_DSN=$SENTRY_DEMO_DSN" || true
-  fi
-  set -x
+$DEIS_BIN apps:create "$DEIS_APP_NAME" --no-remote || true
+
+echo "Configuring the new demo app"
+$DEIS_BIN config:set -a "$DEIS_APP_NAME" $(< docker/envfiles/demo.env) || true
+
+# Sentry DSN is potentially sensitive. Turn off command echo.
+set +x
+if [[ -n "$SENTRY_DEMO_DSN" ]]; then
+  $DEIS_BIN config:set -a "$DEIS_APP_NAME" "SENTRY_DSN=$SENTRY_DEMO_DSN" || true
 fi
+set -x
+
 echo "Pulling $DOCKER_IMAGE_TAG into Deis app $DEIS_APP_NAME"
 $DEIS_BIN pull "$DOCKER_IMAGE_TAG" -a "$DEIS_APP_NAME"
