@@ -2,7 +2,7 @@
 # http://bedrock.readthedocs.io/en/latest/pipeline.html#configuration
 demo: true
 regions:
-  - tokyo
+  - virginia
 integration_tests:
   - headless
   - firefox
