@@ -123,6 +123,7 @@ if ( config.apps ) {
                             throw err
                         }
                     }
+                    utils.ircNotification([message: appURL, status: 'shipped'])
                 }
                 if ( config.integration_tests ) {
                     // queue up test closures
@@ -140,9 +141,9 @@ if ( config.apps ) {
                             throw err
                         }
                     }
+                    // huge success \o/
+                    utils.ircNotification([message: "${appURL} passed all tests!", status: 'success'])
                 }
-                // huge success \o/
-                utils.ircNotification([message: appURL, status: 'shipped'])
             }
         }
     }
