@@ -5,6 +5,8 @@ smoke_tests: true
 regions:
   - usw
   - euw
+  - virginia
+  - tokyo
 apps:
   - bedrock-dev
 integration_tests:

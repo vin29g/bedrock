@@ -14,10 +14,13 @@ ENV_FILES=(
   "jenkins/branches/${BRANCH_NAME}.env"
 )
 
-pip install -U envcat
+# install envcat
+virtualenv envcatenv
+envcatenv/bin/pip install envcat
+ENVCAT=envcatenv/bin/envcat
 
 # reads which ever of the above files exist in order and combines values
-ENV_VALUES=( $(envcat "${ENV_FILES[@]}") )
+ENV_VALUES=( $($ENVCAT "${ENV_FILES[@]}") )
 
 if [[ -n "$SENTRY_DEMO_DSN" ]]; then
     ENV_VALUES+=( "SENTRY_DSN=$SENTRY_DEMO_DSN" )
