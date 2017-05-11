@@ -1,0 +1,74 @@
+{# This Source Code Form is subject to the terms of the Mozilla Public
+ # License, v. 2.0. If a copy of the MPL was not distributed with this
+ # file, You can obtain one at http://mozilla.org/MPL/2.0/. -#}
+
+{% from "macros.html" import google_play_button with context %}
+
+{% extends "firefox/new/batm/base.html" %}
+
+{% block optimizely %}
+  {% if switch('firefox-new-optimizely', ['en-US']) %}
+    {% include 'includes/optimizely.html' %}
+  {% endif %}
+{% endblock %}
+
+{% block content %}
+<main role="main">
+  <header>
+    <h1>Browse against the machine</h1>
+    <p>Get Firefox, the only browser built for people, not profit.</p>
+  </header>
+  <ul class="copy">
+    <li>
+      <h2>{{_('Click it to the man')}}</h2>
+      <p>{{_('Because Firefox is independent, and built by a non-profit, we fight for your online rights, keep corporate powers in check, and make the internet accessible to everyone, everywhere.')}}</p>
+    </li>
+    <li>
+      <h2>{{_('Get out of dodgy')}}</h2>
+      <p>{{_('Firefox doesn’t sell access to your personal information like other browsers. From privacy tools to tracking protection, you control who sees what.')}}</p>
+    </li>
+    <li>
+      <h2>{{_('Take a load off')}}</h2>
+      <p>{{_('We’ve spent the last year supercharging Firefox’s performance. Now you can start up faster, switch tabs quicker, and scroll like there’s no tomorrow.')}}</p>
+    </li>
+  </ul>
+  <div class="download-cta">
+    {{ download_firefox(alt_copy=_('Download Firefox'), locale_in_transition=True, button_color='button-hollow') }}
+    <button id="other-platforms-modal-link" class="hidden" type="button">{{_('Firefox for Other Platforms & Languages')}}</button>
+  </div>
+
+  <div id="other-platforms">
+    <div class="container">
+      <section class="section-other-platforms">
+        <h4>{{_('Firefox for other platforms') }}</h4>
+
+        {{ download_firefox_desktop_list() }}
+
+        <ul class="other-platforms-mobile">
+          <li class="android">
+            {{ google_play_button() }}
+          </li>
+          <li class="ios">
+            <a href="{{ firefox_ios_url('mozorg-fxnew_page_scene1_modal-appstore-button') }}" data-link-type="download" data-download-os="iOS">
+              <img src="{{ l10n_img('firefox/ios/btn-app-store.svg') }}" alt="{{ _('Download on the App Store') }}" width="152" height="45">
+            </a>
+          </li>
+        </ul>
+      </section>
+
+      <section class="section-current-platform">
+        {# L10n: span's below are for visual formatting and line break. #}
+        <h4 class="heading-windows">{{_('Download Firefox <span>for Windows</span>') }}</h4>
+        <h4 class="heading-osx">{{_('Download Firefox <span>for macOS</span>') }}</h4>
+        <h4 class="heading-linux">{{_('Download Firefox <span>for Linux</span>') }}</h4>
+
+        {{ download_firefox(dom_id='download-other-platforms-modal', alt_copy=_('Free Download'), locale_in_transition=True, button_color='button-hollow') }}
+      </section>
+    </div>
+  </div>
+</main>
+{% endblock %}
+
+{% block js %}
+  {% javascript 'firefox_new_scene1_batm' %}
+{% endblock %}
